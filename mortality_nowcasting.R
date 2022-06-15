@@ -14,7 +14,7 @@ data<-readxl::read_excel("mort2021.xlsx")
 data$Day=weekdays(as.Date(data$Rep.date))
 data$Day <- relevel(factor(data$Day),"maandag")
 
-date.now=as.Date('2021-07-31') #set nowcast date
+date.now=as.Date('2021-10-31') #set nowcast date
 max.delay=7 #maximum delay
 date.start=as.Date(min(data$Date))
 T.now=as.numeric(date.now - date.start) + 1
