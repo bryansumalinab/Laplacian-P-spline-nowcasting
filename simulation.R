@@ -6,12 +6,19 @@ library(RColorBrewer)
 
 source("Nowcasting_sim.R")
 
+#function f1
 f <- function(a1,a2,x) exp(a1 + a2*sin((2*pi*x)/150))
-mu.sim=f(a1=2,a2=1,x=1:365)
+mu.sim=f(a1=2,a2=1,x=1:365) #f11
+# mu.sim=f(a1=3,a2=1,x=1:365) #f12
+
+# #function f2
+# f <- function(a1,a2,x) exp(a1 + a2*sin((2*pi*x)/150) +0.2*sqrt(x))
+# mu.sim=f(a1=0,a2=0.4,x=1:365)
+
 p=c(0.1,0.4,0.2,0.1,0.1,0.05,0.05)
 N=1000 #number of simulations
 max.delay=7 #maximum delay
-date.now=as.Date('2021-04-30') #set nowcast date
+date.now=as.Date('2021-03-31') #set nowcast date
 
 CI=matrix(nrow=max.delay,ncol=N)
 bias=matrix(nrow=max.delay,ncol=N)
