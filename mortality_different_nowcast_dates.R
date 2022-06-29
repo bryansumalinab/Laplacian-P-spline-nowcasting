@@ -114,10 +114,10 @@ plot.delay=function(delay,date.now){
   delay %>%
     ggplot(aes(Date , Delay, z = density))+
     geom_contour()+
-    geom_contour_filled()+
+    geom_contour_filled(breaks = seq(0,.8,by=0.1))+
     scale_x_date(date_breaks = "1 month",
-                 date_labels = "%b")+
-    theme(legend.position = "none")+
+                 date_labels = "%b",
+                 expand = c(0,0))+
     labs(x=NULL)+
     ggtitle(paste("Nowcast date: ",toupper(format(date.now,"%b %d")) ))
 }
@@ -128,3 +128,5 @@ for(i in 1:length(dates.now)){
 }
 
 do.call("grid.arrange",c(delay_plots, ncol=2))
+# do.call("grid.arrange",c(delay_plots[1:4], ncol=2))
+# do.call("grid.arrange",c(delay_plots[5:8], ncol=2))
