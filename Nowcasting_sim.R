@@ -3,7 +3,6 @@ Nowcasting_sim<-function(data,date.now,Kt=40,Kd=10,v_init=c(1,1)){
   #prior for penalty 
   a=b= 10^(-5) 
   nu=3
-  zeta=1e-05 #precision week effects coefficient
   
   D=max(data$d)
   T=max(data$t)
