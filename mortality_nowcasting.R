@@ -4,6 +4,8 @@ library(numDeriv)
 library(tidyverse)
 library(RColorBrewer)
 
+Sys.setlocale("LC_TIME", "English") #set language to English
+
 source("Nowcasting.R")
 
 ######### Data setup #########
@@ -12,7 +14,7 @@ data<-readxl::read_excel("mort2021.xlsx")
 
 #day of the week (Monday as reference category)
 data$Day=weekdays(as.Date(data$Rep.date))
-data$Day <- relevel(factor(data$Day),"maandag")
+data$Day <- relevel(factor(data$Day),"Monday")
 
 date.now=as.Date('2021-10-31') #set nowcast date
 max.delay=7 #maximum delay
