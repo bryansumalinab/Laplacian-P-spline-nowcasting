@@ -5,11 +5,13 @@ library(tidyverse)
 library(RColorBrewer)
 library(gridExtra)
 
+Sys.setlocale("LC_TIME", "English") #set language to English
+
 source("Nowcasting.R")
 
 data<-readxl::read_excel("mort2021.xlsx")
 data$Day=weekdays(as.Date(data$Rep.date))
-data$Day <- relevel(factor(data$Day),"maandag")
+data$Day <- relevel(factor(data$Day),"Monday")
 
 dates.now=as.Date(c('2021-03-31','2021-04-30','2021-05-31','2021-06-30',
                     '2021-07-31','2021-08-31','2021-09-30','2021-10-31'))
