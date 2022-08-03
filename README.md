@@ -8,7 +8,7 @@ This repository contains R codes used to generate results from the paper "Bayesi
 The R codes for performing the simulation study are contained in the **LPS** and **VanDeKassteele** folders, corresponding to the Laplacian-P-splines (LPS) and Van de Kassteele et al. (2019) method, respectively.
 
 ## R codes for real data application:
-The script **mortality_nowcasting.R** is used for nowcasting of mortality data for one nowcast date. The script **mortality_diffnd.R** contains R codes that loops through all the different nowcast dates considered in the analysis of mortality data. The codes for plotting the nowcast and (estimated) delay density are contained in these scripts.
+The script **mortality_nowcasting.R** is used for nowcasting of mortality data for one nowcast date. The script **mortality_diffnd.R** contains R codes that loopsthrough all the different nowcast dates considered in the analysis of mortality data. The codes for plotting the nowcast and (estimated) delay density are contained in these scripts.
 
 ## Source functions
 There are two source functions for the LPS method:
