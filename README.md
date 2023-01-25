@@ -11,6 +11,9 @@ The R codes used in the simulation study can be found in the **Simulation** fold
 
 Each of the above codes will produce simulation results such as prediction interval coverage, mean absolute percentage error (MAPE), and symmetric mean absolute percentage error (SMAPE) for the specified number of iterations (in our case 1000). The results are only for a specified nowcast date, and the scripts must be re-run to obtain results for the other nowcast dates. This can be set at the beginning of the R script with the object name *date.now*.
 
+## Data
+The data used in the paper is the 2021 COVID-19 mortality data in Belgium which can be found in the **Data** folder named **mort2021.xlsx**.
+
 ## R codes for real data application:
 The script **mortality_nowcasting.R** is used for nowcasting of mortality data for one nowcast date. The script **mortality_diffnd.R** contains R codes that loops through all the different nowcast dates considered in the analysis of mortality data. The codes for plotting the nowcast and (estimated) delay density are contained in these scripts.
 
