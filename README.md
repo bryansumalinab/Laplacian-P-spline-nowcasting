@@ -15,9 +15,8 @@ Each of the above codes will produce simulation results such as prediction inter
 The data used in the paper is the 2021 COVID-19 mortality data in Belgium which can be found in the **Data** folder named **mort2021.xlsx**.
 
 ## R codes for real data application:
-The script **mortality_nowcasting.R** is used for nowcasting of mortality data for one nowcast date. The script **mortality_diffnd.R** contains R codes that loops through all the different nowcast dates considered in the analysis of mortality data. The codes for plotting the nowcast and (estimated) delay density are contained in these scripts.
+The R codes used for the analysis of mortality data are contained in the Real Data Application folder which contains three R scripts: **mortality_nowcasting.R**, **mortality_diffnd.R** and **Nowcasting.R**.
 
-## Source functions
-There are two source functions for the LPS method:
-1. **Nowcasting.R** - this include the day of the week effects in the model that is used for the analysis of 2021 Belgian COVID-19 mortality data (**mort2021.xlsx**).
-2. **Nowcasting_sim.R** - source function to perform the simulation study (without day of the week effects) using LPS method.
+1. **mortality_nowcasting.R** - The script **mortality_nowcasting.R** is used for the nowcasting of mortality data for only one nowcast date. This code will produce the nowcast plot and the delay density plot for a specified nowcast date.
+2. **mortality_diffnd.R** - The script **mortality_diffnd.R** on the other hand, contains R codes that loop through all the different nowcast dates considered in the analysis of mortality data. This will produce the nowcast plot (Figure 5 in the paper) and estimated delay density plot (Figure 6 in the paper) for eight nowcast dates.
+3. **Nowcasting.R** - This source function needs to be loaded before running the codes **mortality_nowcasting.R** and **mortality_diffnd.R**.
