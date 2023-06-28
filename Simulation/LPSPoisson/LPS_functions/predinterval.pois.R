@@ -52,15 +52,6 @@ predinterval.pois <- function(data, # data
     logmu.var[i] <- X_nyr[i,]%*%sigma_xi%*%X_nyr[i,]
   }
   
-  # # Generate negative binomial samples
-  # r.nb <- list()
-  # N <- 1000
-  # for (i in 1:length(logmu)) {
-  #   rn <- rnorm(N, mean = logmu[i], sd = sqrt(logmu.var[i]))
-  #   mu <- exp(rn)
-  #   r.nb[[i]] <- MASS::rnegbin(n = N, mu = mu, theta = exp(v_mode[3]))
-  # }
-  
   set.seed(12345)
   # Generate Poisson samples
   r.pois <- list()
