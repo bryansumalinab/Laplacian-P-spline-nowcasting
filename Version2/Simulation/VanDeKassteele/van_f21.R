@@ -4,12 +4,12 @@ library(Matrix)
 library(tidyverse)
 
 # Source functions
-list.files(path = "functions", full.names = TRUE) %>% 
+list.files(path = "van_functions", full.names = TRUE) %>% 
   walk(source)
 
-# Function f12
-f <- function(a1,a2,x) 50 + exp(a1 + a2*sin((2*pi*x)/150))
-mu.sim <- f(a1  = 3, a2 = 2, x = 1:365)
+# Function f21
+f <- function(a1,a2,x) exp(a1 + a2*sin((2*pi*x)/150) +0.2*sqrt(x))
+mu.sim <- f(a1=0,a2=0.4,x=1:365)
 
 # Different nowcast dates (every end of the month) from March to November
 dates.nowcast <- as.Date(c('2021-03-31','2021-04-30','2021-05-31','2021-06-30',

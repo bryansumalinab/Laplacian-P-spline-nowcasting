@@ -5,7 +5,7 @@ library(ggplot2)
 
 
 # Source functions
-list.files(path = "functions", full.names = TRUE) %>% 
+list.files(path = "LPS_functions", full.names = TRUE) %>% 
   purrr::walk(source)
 
 
