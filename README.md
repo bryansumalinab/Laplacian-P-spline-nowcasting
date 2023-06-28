@@ -6,7 +6,7 @@ This repository contains R codes used to generate results from the paper "Bayesi
 
 This repository is divided into two main folders: (1) **Version1** - which includes R codes for the first version of the paper, assuming a Poisson distribution for the number of cases, and (2) **Version2** - containing R codes for generating results in the revised version of the paper, assuming a negative binomial distribution for the number of cases. Here, we focus on the revised/updated version.
 
-The Version2 folder contains the following subfolders: Simulation, Data, and Real Data Application:
+The Version2 folder contains the following subfolders: **Simulation**, **Data**, and **Real Data Application**:
 
 ## R codes for simulation:
 The R codes used in the simulation study can be found in the **Simulation** folder. There are three subfolders for the simulation codes, the (1) **LPSNB** (2) **LPSPoisson** and (3) **VanDeKassteele** folders:
@@ -20,4 +20,4 @@ Each of the above codes will produce simulation results such as prediction inter
 The data used in the paper is the 2021/2022 COVID-19 mortality/incidence data in Belgium which can be found in the **Data** folder named **mort2021.xlsx** and **incidence2022.xlsx**.
 
 ## R codes for real data application:
-The script used for the analysis of mortality data is contained in the Real Data Application folder.
+The script used for the analysis of mortality data is contained in the **Real Data Application** folder.
