@@ -4,7 +4,7 @@ Bryan Sumalinab, Oswaldo Gressani, Niel Hens and Christel Faes
 ## About this repository
 This repository contains R codes used to generate results from the paper "Bayesian nowcasting with Laplacian-P-splines" by Bryan Sumalinab, Oswaldo Gressani, Niel Hens and Christel Faes.
 
-This repository is divided into two main folders: (1) Version1 - which includes R codes for the first version of the paper, assuming a Poisson distribution for the number of cases, and (2) Version2 - containing R codes for generating results in the revised version of the paper, assuming a negative binomial distribution for the number of cases. Here, we focus on the revised/updated version.
+This repository is divided into two main folders: (1) **Version1** - which includes R codes for the first version of the paper, assuming a Poisson distribution for the number of cases, and (2) **Version2** - containing R codes for generating results in the revised version of the paper, assuming a negative binomial distribution for the number of cases. Here, we focus on the revised/updated version.
 
 The Version2 folder contains the following subfolders: Simulation, Data, and Real Data Application:
 
