@@ -1,4 +1,4 @@
-
+rm(list = ls())
 # Load packages
 library(Matrix)
 library(tidyverse)
@@ -7,15 +7,18 @@ library(tidyverse)
 list.files(path = "van_functions", full.names = TRUE) %>% 
   walk(source)
 
-# Function f22
-f <- function(a1,a2,x) exp(a1 + a2*sin((2*pi*x)/150) +0.2*sqrt(x))
-mu.sim <- f(a1=1.5,a2=0.4,x=1:365)
+
+# Function f2
+a1 <- 3
+a2 <- 2
+f <- function(a1,a2,x) 50 + exp(a1 + a2*sin((2*pi*x)/150))
+mu.sim <- f(a1  = a1, a2 = a2, x = 1:365)
 
 # Different nowcast dates (every end of the month) from March to November
 dates.nowcast <- as.Date(c('2021-03-31','2021-04-30','2021-05-31','2021-06-30',
                            '2021-07-31','2021-08-31','2021-09-30','2021-10-31','2021-11-30'))
 
-start.date <- as.Date("2021-01-01") # Set start date date
+start.date <- as.Date("2021-01-01") # Set start date
 nowcast.date <- dates.nowcast[1] # Set nowcast date
 
 p <- c(0.1,0.4,0.2,0.1,0.1,0.05,0.05) # Delay probabilities
@@ -24,11 +27,10 @@ max.delay <- 7 # Maximum delay
 overdisp <- 10
 
 
-CI <- matrix(nrow = max.delay,ncol = N)
-bias <- matrix(nrow = max.delay,ncol = N)
-mape <- matrix(nrow = max.delay,ncol = N)
-smape <- matrix(nrow = max.delay,ncol = N)
-ciwdth <- matrix(nrow = max.delay,ncol = N)
+PI_cov <- matrix(nrow = max.delay,ncol = N)
+PI_width <- matrix(nrow = max.delay,ncol = N)
+Bias_mu <- matrix(nrow = max.delay,ncol = N)
+Relbias_mu <- matrix(nrow = max.delay,ncol = N)
 
 set.seed(12345)
 for (j in 1:N) {
@@ -94,18 +96,21 @@ for (j in 1:N) {
       select(Obs)
     nowcast_result$Obs <- obs$Obs
     
-    result <- nowcast_result %>%
-      mutate(x=ifelse(Obs >= lwr & Obs <= upr,1,0)) %>%
-      mutate(bias=med-Obs,
-             mape=abs((med-Obs)/Obs),
-             smape=abs(med-Obs)/(((abs(med)+abs(Obs)))/2),
-             ciwdth = upr - lwr)
+    T.now <- as.numeric(nowcast.date - start.date) + 1
+    dates.now <- seq(T.now-(max.delay-1),T.now) # dates that have nowcast
+    mu.now <- f(a1  = a1, a2 = a2, x = dates.now)
     
-    CI[,j] <- result$x
-    bias[,j] <- result$bias
-    mape[,j] <- result$mape
-    smape[,j] <- result$smape
-    ciwdth[,j] <- result$ciwdth
+    result <- nowcast_result %>%
+      mutate(x = ifelse(Obs >= lwr & Obs <= upr,1,0)) %>%
+      mutate(PI_width = upr - lwr,
+             Bias_mu = med - mu.now,
+             Relbias_mu = abs((med - mu.now) / mu.now))
+    
+    PI_cov[,j] <- result$x
+    PI_width[,j] <- result$PI_width
+    Bias_mu[,j] <- result$Bias_mu
+    Relbias_mu[,j] <- result$Relbias_mu
+    
     
   },error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
   
@@ -113,26 +118,23 @@ for (j in 1:N) {
 }
 
 
-######## (a) CI COVERAGE #######
-# Prediction interval coverage for N simulations
-COVERAGE<- round(apply(CI, MARGIN = 1, mean,na.rm = T)*100,2)
-COVERAGE
+######## (a) PI COVERAGE #######
+round(apply(PI_cov, MARGIN = 1, mean,na.rm = T)*100,2)
 
-######## (b) MAPE #######
-# Replace infinity with NA
-# When there is zero simulated (actual) cases, it will lead to infinity values
-mape[sapply(mape, is.infinite)] <- NA
+######## (b) PI width #######
+round(apply(PI_width, MARGIN = 1, mean,na.rm = T),2)
 
-# Average MAPE for N simulations
-MAPE <- round(apply(mape, MARGIN = 1, mean,na.rm = T)*100,2)
-MAPE
+######## (c) Bias(mu) #######
+round(apply(Bias_mu, MARGIN = 1, mean,na.rm = T),2)
 
-######## (c) SMAPE #######
-# Average SMAPE for N simulations
-SMAPE <- round(apply(smape, MARGIN = 1, mean,na.rm = T)*100,2)
-SMAPE
+######## (d) Relative bias (mu) #######
+round(apply(Relbias_mu, MARGIN = 1, mean,na.rm = T)*100,2)
 
-######## (D) CI width #######
-# Average CI width for N simulations
-CIwidth <- round(apply(ciwdth, MARGIN = 1, mean,na.rm = T),2)
-CIwidth
+results <- data.frame(rbind("PI Coverage" = round(apply(PI_cov, MARGIN = 1, mean, na.rm = TRUE) * 100, 2),
+                            "PI Width" = round(apply(PI_width, MARGIN = 1, mean, na.rm = TRUE), 2),
+                            "Bias (mu)" = round(apply(Bias_mu, MARGIN = 1, mean, na.rm = TRUE), 2),
+                            "Relative bias (mu)" = round(apply(Relbias_mu, MARGIN = 1, mean, na.rm = TRUE) * 100, 2)))
+colnames(results) <- c("T-6", "T-5", "T-4", "T-3", "T-2", "T-1", "T")
+
+# Performance measures on the nowcast day
+results[, 7, drop = FALSE]
